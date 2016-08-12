@@ -10,16 +10,16 @@
 <http://lemon-model.net/lemon>
 	a owl:Ontology ;
 	rdfs:comment "Lemon: The lexicon model for ontologies is designed to allow  for descriptions of lexical information regarding ontological elements and other RDF resources. Lemon covers mapping of lexical decomposition, phrase structure, syntax,  variation, morphology, and lexicon-ontology mapping."@en ,
-		     ""@ru ;
+		     "Lemon: Лексикон (модель) для онтологий, позволяющий создавать лексические описания элементов онтологий и других RDF-ресурсов. Lemon позволяет строить задавать результаты лексического разбора, структуру фраз, синтаксис, варианты представления, морфологию и отображения лексикона в онтологию."@ru ;
 	rdfs:label "lemon"@en ,
-		   ""@ru ;
+		   "лемон"@ru ;
 	rdfs:seeAlso <http://www.monnet-project.eu/lemon> .
 
 lemon:Argument
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "A slot representing a gap that must be filled in realising a lexical entry in a given projection"@en ,
-		     ""@ru ;
+		     "Ячейка, представляющая собой место, заполняемое лексической единицей в заданной проекции"@ru ;
 	rdfs:label "Argument"@de ,
 		   "Argument"@en ,
 		   "Argumento"@es ,
@@ -44,7 +44,7 @@ lemon:Component
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "A constituent element of a lexical entry. This may be a word in a multi-word lexical element or a constituent of a compound word"@en ,
-		     ""@ru ;
+		     "Составляющий элемент лексической единицы, например, слово во составном термине или часть слова (приставка, суффикс и т.п.)"@ru ;
 	rdfs:label "Komponente"@de ,
 		   "Component"@en ,
 		   "Componente"@es ,
@@ -72,7 +72,7 @@ lemon:ComponentList
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "A node within a list of components. This should generally be a blank node,see rdf:List"@en ,
-		     ""@ru ;
+		     "Элемент списка составляющих элементов. Экземпляры данного класса, как правило, - анонимные узлы, см. rdf:List"@ru ;
 	rdfs:subClassOf [ a owl:Restriction ;
 			  owl:cardinality "1"^^xsd:nonNegativeInteger ;
 			  owl:onProperty rdf:rest
@@ -102,7 +102,7 @@ lemon:Form
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "A given written or spoken realisation of a lexical entry"@en ,
-		     ""@ru ;
+		     "Заданное писменное или речевое воплощение лексической единицы"@ru ;
 	rdfs:label "Form"@de ,
 		   "Form"@en ,
 		   "Forma"@es ,
@@ -128,7 +128,7 @@ lemon:Frame
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "A stereotypical example of the usage of a given lexical entry. The most common example of projections are subcategorization frames which describe the slots taken by the arguments of a verb."@en ,
-		     ""@ru ;
+		     "Стереотипный пример использования заданной лексической единицы. Наиболее убщеопетребительный пример проекции - это [фреймы подкатегоризации], которые описывают ячейки, занимаемые аргументами глаголов."@ru ;
 	rdfs:label "Rahmen"@de ,
 		   "Frame"@en ,
 		   "Marco"@es ,
@@ -149,7 +149,7 @@ lemon:HasLanguage
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "Structural element for all elements that can be tagged with a language"@en ,
-		     ""@ru ;
+		     "Структурирующий элемент для всех элементов онтологии, которые могут быть помечены идентификатором языка"@ru ;
 	rdfs:subClassOf lemon:LemonElement .
 
 lemon:HasPattern
@@ -165,7 +165,7 @@ lemon:LexicalCondition
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "An evaluable condition on when a sense applies."@en ,
-		     ""@ru ;
+		     "Условие, при котором смысл может быть применен к понятию или объекту."@ru ;
 	rdfs:label "Lexikonbedingung"@de ,
 		   "Lexical Condition"@en ,
 		   "Condición léxica"@es ,
@@ -178,7 +178,7 @@ lemon:LexicalContext
 	a rdfs:Class ,
 	  owl:Class ;
 	rdfs:comment "Indicates the pragmatic or discourse context in which a sense applies"@en ,
-		     ""@ru ;
+		     "Указывает прагматический или текстовый контекст, где смысл может быть применен"@ru ;
 	rdfs:label "Lexikonkontext"@de ,
 		   "Lexical Context"@en ,
 		   "Contexto léxico"@es ,
