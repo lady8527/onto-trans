@@ -1,0 +1,1276 @@
+@base          <lemon> .
+@prefix   owl: <http://www.w3.org/2002/07/owl#> .
+@prefix   xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix  rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix   rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix lemon: <http://lemon-model.net/lemon#> .
+
+# Named toplevel resources (84)
+
+<http://lemon-model.net/lemon>
+	a owl:Ontology ;
+	rdfs:comment "Lemon: The lexicon model for ontologies is designed to allow  for descriptions of lexical information regarding ontological elements and other RDF resources. Lemon covers mapping of lexical decomposition, phrase structure, syntax,  variation, morphology, and lexicon-ontology mapping."@en ,
+		     ""@ru ;
+	rdfs:label "lemon"@en ,
+		   ""@ru ;
+	rdfs:seeAlso <http://www.monnet-project.eu/lemon> .
+
+lemon:Argument
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A slot representing a gap that must be filled in realising a lexical entry in a given projection"@en ,
+		     ""@ru ;
+	rdfs:label "Argument"@de ,
+		   "Argument"@en ,
+		   "Argumento"@es ,
+		   "Actant"@fr ,
+		   "Argument"@nl ,
+		   "Аргумент"@ru ;
+	rdfs:subClassOf lemon:LemonElement ,
+			lemon:PhraseElement ;
+	owl:disjointWith lemon:Component ,
+			 lemon:Form ,
+			 lemon:Frame ,
+			 lemon:LexicalEntry ,
+			 lemon:LexicalSense ,
+			 lemon:Lexicon ,
+			 lemon:Node ,
+			 lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:Component
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A constituent element of a lexical entry. This may be a word in a multi-word lexical element or a constituent of a compound word"@en ,
+		     ""@ru ;
+	rdfs:label "Komponente"@de ,
+		   "Component"@en ,
+		   "Componente"@es ,
+		   "Composant"@fr ,
+		   "Bestanddeel"@nl ,
+		   "Компонента"@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:element
+			] ,
+			lemon:LemonElement ,
+			lemon:PhraseElement ;
+	owl:disjointWith lemon:Form ,
+			 lemon:Frame ,
+			 lemon:LexicalEntry ,
+			 lemon:LexicalSense ,
+			 lemon:Lexicon ,
+			 lemon:Node ,
+			 lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:ComponentList
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A node within a list of components. This should generally be a blank node,see rdf:List"@en ,
+		     ""@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:cardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty rdf:rest
+			] ,
+			[ a owl:Restriction ;
+			  owl:allValuesFrom [ a rdfs:Class ;
+					      owl:unionOf ( lemon:ComponentList
+							    [ a rdfs:Class ;
+							      owl:oneOf ( rdf:nil
+									)
+							    ]
+							  )
+					    ] ;
+			  owl:onProperty rdf:rest
+			] ,
+			[ a owl:Restriction ;
+			  owl:cardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty rdf:first
+			] ,
+			[ a owl:Restriction ;
+			  owl:allValuesFrom lemon:Component ;
+			  owl:onProperty rdf:first
+			] ,
+			rdf:List .
+
+lemon:Form
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A given written or spoken realisation of a lexical entry"@en ,
+		     ""@ru ;
+	rdfs:label "Form"@de ,
+		   "Form"@en ,
+		   "Forma"@es ,
+		   "Forme"@fr ,
+		   "Vorm"@nl ,
+		   "Форма"@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:representation
+			] ,
+			lemon:LemonElement ;
+	owl:disjointWith lemon:Frame ,
+			 lemon:LexicalEntry ,
+			 lemon:LexicalSense ,
+			 lemon:Lexicon ,
+			 lemon:Node ,
+			 lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:Frame
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A stereotypical example of the usage of a given lexical entry. The most common example of projections are subcategorization frames which describe the slots taken by the arguments of a verb."@en ,
+		     ""@ru ;
+	rdfs:label "Rahmen"@de ,
+		   "Frame"@en ,
+		   "Marco"@es ,
+		   "Cadre"@fr ,
+		   "Raam"@nl ,
+		   "Рамка"@ru ;
+	rdfs:subClassOf lemon:LemonElement ;
+	owl:disjointWith lemon:LexicalEntry ,
+			 lemon:LexicalSense ,
+			 lemon:Lexicon ,
+			 lemon:Node ,
+			 lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:HasLanguage
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "Structural element for all elements that can be tagged with a language"@en ,
+		     ""@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:HasPattern
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:LemonElement
+	a rdfs:Class ,
+	  owl:Class .
+
+lemon:LexicalCondition
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "An evaluable condition on when a sense applies."@en ,
+		     ""@ru ;
+	rdfs:label "Lexikonbedingung"@de ,
+		   "Lexical Condition"@en ,
+		   "Condición léxica"@es ,
+		   "Condition lexicale"@fr ,
+		   "Lexikaal Voorwaarde"@nl ,
+		   "Лексическое условие"@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:LexicalContext
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "Indicates the pragmatic or discourse context in which a sense applies"@en ,
+		     ""@ru ;
+	rdfs:label "Lexikonkontext"@de ,
+		   "Lexical Context"@en ,
+		   "Contexto léxico"@es ,
+		   "Contexte lexical"@fr ,
+		   "Lexikaal Context"@nl ,
+		   "Лексический контекст"@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:LexicalEntry
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "An entry in the lexicon. This may be any morpheme, word, compound, phrase or clause that is included in the lexicon"@en ,
+		     ""@ru ;
+	rdfs:label "Lexikoneintrag"@de ,
+		   "Lexical entry"@en ,
+		   "Entrada léxica"@es ,
+		   "Entrée lexicale"@fr ,
+		   "Lexikaal item"@nl ,
+		   "Лексическая единица"@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:lexicalForm
+			] ,
+			[ a owl:Restriction ;
+			  owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:canonicalForm
+			] ,
+			lemon:HasLanguage ,
+			lemon:HasPattern ,
+			lemon:LemonElement ;
+	owl:disjointWith lemon:LexicalSense ,
+			 lemon:Lexicon ,
+			 lemon:Node ,
+			 lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:UsageExample .
+
+lemon:LexicalSense
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "Represents the intersection in meaning between the lexical entry and the ontology entity. This is used as the ontology entity and lexical entry may not be in one-to-one correspondence as such the existence of a sense between them states meerly that there are some cases when this lexical entry refer to the ontology entity and vica versa. Mapping elements can be used to further specify this relation"@en ,
+		     ""@ru ;
+	rdfs:label "Lexikonsinn"@de ,
+		   "Lexical sense"@en ,
+		   "Acepción léxica"@es ,
+		   "Signification lexicale"@fr ,
+		   "Lexikaal zin"@nl ,
+		   ""@ru ;
+	rdfs:subClassOf [ a rdfs:Class ;
+			  owl:unionOf ( [ a owl:Restriction ;
+					  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+					  owl:onProperty lemon:subsense
+					]
+					[ a owl:Restriction ;
+					  owl:cardinality "1"^^xsd:nonNegativeInteger ;
+					  owl:onProperty lemon:reference
+					]
+				      )
+			] ,
+			lemon:LemonElement ;
+	owl:disjointWith lemon:Lexicon ,
+			 lemon:Node ,
+			 lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:LexicalTopic
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "Indicates the topic of a lexicon or a lexical entry"@en ,
+		     ""@ru ;
+	rdfs:label "Lexikonthema"@de ,
+		   "Lexical Topic"@en ,
+		   "Tema léxica"@es ,
+		   "Thème lexicale"@fr ,
+		   "Lexikaal Thema"@nl ,
+		   ""@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:Lexicon
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "The lexicon object. This object is specific to the given language and/or domain it describes"@en ,
+		     ""@ru ;
+	rdfs:label "Lexikon"@de ,
+		   "Lexicon"@en ,
+		   "Lexicón"@es ,
+		   "Lexique"@fr ,
+		   "Lexicon"@nl ,
+		   "Лексикон"@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:entry
+			] ,
+			[ a owl:Restriction ;
+			  owl:cardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:language
+			] ,
+			lemon:HasLanguage ,
+			lemon:HasPattern ,
+			lemon:LemonElement ;
+	owl:disjointWith lemon:Node ,
+			 lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:MorphPattern
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:label "Morphologische Muster"@de ,
+		   "Morphological pattern"@en ,
+		   "Patrón morfológico"@es ,
+		   "Patron morphologique"@fr ,
+		   "Morphologisch Patroon"@nl ,
+		   "Морфологический шаблон"@ru ;
+	rdfs:subClassOf lemon:HasLanguage ,
+			lemon:LemonElement .
+
+lemon:MorphTransform
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:label "Morphologische Transformation"@de ,
+		   "Morphological Transform"@en ,
+		   "Transformación morfológica"@es ,
+		   "Transformation morphologique"@fr ,
+		   "Morphologisch transformatie"@nl ,
+		   "Морфологическое преобразование"@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:Node
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A node in a phrase structure or dependency parse graph"@en ,
+		     ""@ru ;
+	rdfs:label "Knoten"@de ,
+		   "Node"@en ,
+		   "Vértice"@es ,
+		   "Nœud"@fr ,
+		   "Punt"@nl ,
+		   "Узел"@ru ;
+	rdfs:subClassOf [ a rdfs:Class ;
+			  owl:unionOf ( [ a owl:Restriction ;
+					  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+					  owl:onProperty lemon:edge
+					]
+					[ a owl:Restriction ;
+					  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+					  owl:onProperty lemon:leaf
+					]
+				      )
+			] ,
+			lemon:LemonElement ;
+	owl:disjointWith lemon:PropertyValue ,
+			 lemon:SenseDefinition ,
+			 lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:NodeConstituent
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "The class of constituents, that is types applied to nodes in a phrase structure graph"@en ,
+		     ""@ru ;
+	rdfs:label "Konstituent"@de ,
+		   "Constituent"@en ,
+		   "Constituyente"@es ,
+		   "Constituent"@fr ,
+		   "Constituent"@nl ,
+		   "Составляющая"@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:Part
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "An affix is a morpheme that is attached to a word stem to form a new word.  Use this for lexical entries with only abstract forms"@en ,
+		     ""@ru ;
+	rdfs:label "Wortteil"@de ,
+		   "Part of word"@en ,
+		   "Parte de la palabra"@es ,
+		   "Partie du mot"@fr ,
+		   "Deel van een woord"@nl ,
+		   "Часть слова"@ru ;
+	rdfs:subClassOf lemon:LexicalEntry .
+
+lemon:Phrase
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A phrase in lemon is defined in the looser sense of a sequence of words, it does not have to a fully grammatical phrase"@en ,
+		     ""@ru ;
+	rdfs:label "Phrase"@de ,
+		   "Phrase"@en ,
+		   "Sintagma"@es ,
+		   "Syntagme"@fr ,
+		   "Zinsdeel"@nl ,
+		   "Фраза"@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:decomposition
+			] ,
+			lemon:LexicalEntry .
+
+lemon:PhraseElement
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A terminal node in a phrase structure graph, i.e., a realisable, lexical element."@en ,
+		     ""@ru ;
+	rdfs:label "Phrase-Element"@de ,
+		   "Phrase element"@en ,
+		   "Elemento del sintagma"@es ,
+		   "Elément du syntagme"@fr ,
+		   "Zinselement"@nl ,
+		   ""@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:PropertyValue
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A value that can be used in the range of linguistic property"@en ,
+		     ""@ru ;
+	rdfs:label "Prädikatswert"@de ,
+		   "Property Value"@en ,
+		   "Valor de la propiedad"@es ,
+		   "Valeur de la propriété"@fr ,
+		   "Waarde van het predikaat"@nl ,
+		   "Свойство"@ru ;
+	rdfs:subClassOf lemon:LemonElement ;
+	owl:disjointWith lemon:SenseDefinition ,
+			 lemon:UsageExample .
+
+lemon:Prototype
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:label "Prototype"@en ,
+		   "Prototipo"@es ,
+		   "Prototype"@fr ,
+		   "Prototyp"@nl ,
+		   "Prototype"@nl ,
+		   "Прототип"@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:SenseCondition
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "Indicates a logical condition that is used indicate when a particular term has the given meaning"@en ,
+		     ""@ru ;
+	rdfs:label "Bedingung"@de ,
+		   "Condition"@en ,
+		   "Condición"@es ,
+		   "Condition"@fr ,
+		   "Voorwaarde"@nl ,
+		   "Условие"@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:SenseContext
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "Indicates the context in which a term is to be used. The context refers not to the immediate syntactic context, but the document and register the document is used in"@en ,
+		     ""@ru ;
+	rdfs:label "Kontext"@de ,
+		   "Context"@en ,
+		   "Contexto"@es ,
+		   "Contexte"@fr ,
+		   "Context"@nl ,
+		   "Контекст"@ru ;
+	rdfs:subClassOf lemon:LemonElement .
+
+lemon:SenseDefinition
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A definition of a sememe, that is the a text describing the exact meaning of the lexical entry when its sense is the given ontology reference"@en ,
+		     ""@ru ;
+	rdfs:label "Definition"@de ,
+		   "Definition"@en ,
+		   "Definición"@es ,
+		   "Définition"@fr ,
+		   "Definitie"@nl ,
+		   "Определение"@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:value
+			] ,
+			lemon:LemonElement ;
+	owl:disjointWith lemon:SynRoleMarker ,
+			 lemon:UsageExample .
+
+lemon:SynRoleMarker
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "The indicator of a given syntactic argument, normally a preposition or other particle marker or a linguistic property such as case"@en ,
+		     ""@ru ;
+	rdfs:label "Syntactische Rolle-Marker"@de ,
+		   "Syntactic role marker"@en ,
+		   "Marcador de la función sintáctica"@es ,
+		   "Marqueur du rôle syntaxique"@fr ,
+		   "Syntactisch rol merker"@nl ,
+		   "Маркер синтаксической роли"@ru ;
+	rdfs:subClassOf [ a rdfs:Class ;
+			  owl:unionOf ( lemon:LexicalEntry
+					lemon:PropertyValue
+				      )
+			] ,
+			lemon:LemonElement ;
+	owl:disjointWith lemon:UsageExample .
+
+lemon:UsageExample
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "An example of the usage of a lexical entry when refering to the ontology entity given by the sememe's reference. This should in effect be an example of the form used in context. E.g., \"this is a *usage example*\""@en ,
+		     ""@ru ;
+	rdfs:label "Anwendungsbeispiel"@de ,
+		   "Usage Example"@en ,
+		   "Ejemplo de uso"@es ,
+		   "Exemple d'utilisation"@fr ,
+		   "Voorbeeld van het gebruik"@nl ,
+		   "Пример использования"@ru ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:value
+			] ,
+			lemon:LemonElement .
+
+lemon:Word
+	a rdfs:Class ,
+	  owl:Class ;
+	rdfs:comment "A word is a single unit of writing or speech. In languages written in Latin, Cyrillic, Greek, Arabic scripts etc. these are assumed to be separated by white-space characters. For Chinese, Japanese, Korean this should correspond to some agreed segmentation scheme."@en ,
+		     ""@ru ;
+	rdfs:label "Wort"@de ,
+		   "Word"@en ,
+		   "Palabra"@es ,
+		   "Mot"@fr ,
+		   "Woord"@nl ,
+		   "Слово"@ru ;
+	rdfs:subClassOf lemon:LexicalEntry .
+
+lemon:abstractForm
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "A representation of a lexical entry that should not be considered canonical. This is primarily from a linguistic view for non-realisable forms such as stems but may also include misspellings and other unusual forms"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Abstrakte Form"@de ,
+		   "Abstract form"@en ,
+		   "Forma abstracta"@es ,
+		   "Forme abstraite"@fr ,
+		   "Abstracte vorm"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Form ;
+	rdfs:subPropertyOf lemon:lexicalForm .
+
+lemon:altRef
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "The sense of a non-preferred but admissible lexicalization of a given ontology entity"@en ,
+		     ""@ru ;
+	rdfs:label "Alternative Referenz von"@de ,
+		   "Alternative reference of"@en ,
+		   "Referencia alternativa de"@es ,
+		   "Référence alternative de"@fr ,
+		   "Alternatieve referentie van"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:subPropertyOf lemon:isReferenceOf .
+
+lemon:broader
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes that one sense is broader than another. From a lexical point of view  this means replacing one lexical entry with another generalizes the meaning of the phrase. From an ontological point of view this property makes not strong assertions. From a mapping point of view if the broader sense applies the narrower sense must also"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Breiter"@de ,
+		   "Broader"@en ,
+		   "Más amplio"@es ,
+		   "Plus large"@fr ,
+		   "Breder"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:subPropertyOf lemon:senseRelation ;
+	owl:inverseOf lemon:narrower .
+
+lemon:canonicalForm
+	a rdf:Property ,
+	  owl:FunctionalProperty ,
+	  owl:ObjectProperty ;
+	rdfs:comment "The canonical (\"dictionary\") form of the lexical entry. This can be used to indicate the \"lemma\" form of a lexical entry"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Kanonische Form"@de ,
+		   "Canonical form"@en ,
+		   "Forma canónica"@es ,
+		   "Forme canonique"@fr ,
+		   "Canonieke vorm"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Form ;
+	rdfs:subPropertyOf lemon:lexicalForm .
+
+lemon:condition
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates an evaluable test, the is necessary for this sense to apply"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Bedingung"@de ,
+		   "Condition"@en ,
+		   "Condición"@es ,
+		   "Condition"@fr ,
+		   "Voorwaarde"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalCondition .
+
+lemon:constituent
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:domain lemon:Node ;
+	rdfs:label "Konstituent"@de ,
+		   "Constituent"@en ,
+		   "Constituyente"@es ,
+		   "Constitutif"@fr ,
+		   "Constituent"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:NodeConstituent ;
+	rdfs:subPropertyOf owl:topObjectProperty .
+
+lemon:context
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes the pragmatic or discursive context of a sense mapping or a constraint on the mapping by syntactic or semantic properites"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Kontext"@de ,
+		   "Context"@en ,
+		   "Contexto"@es ,
+		   "Contexte"@fr ,
+		   "Context"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalContext .
+
+lemon:decomposition
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes a component of a lexical entry"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Dekompositum"@de ,
+		   "Decomposition"@en ,
+		   "Descomposición"@es ,
+		   "Décomposition"@fr ,
+		   "Decompositie"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:ComponentList .
+
+lemon:definition
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates a natural language definition. Note there is a pseudo-node to allow for further description of the definition (e.g., source, creation date etc.). The value property should be used to indicate the string value of the definition."@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Definition"@de ,
+		   "Definition"@en ,
+		   "Definición"@es ,
+		   "Définition"@fr ,
+		   "Definitie"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:SenseDefinition .
+
+lemon:edge
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes the relation between a node in a multi-word expression structure and an edge"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Node ;
+	rdfs:label "Kante"@de ,
+		   "Edge"@en ,
+		   "Arista"@es ,
+		   "Lien"@fr ,
+		   "Lijn"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Node .
+
+lemon:element
+	a rdf:Property ,
+	  owl:FunctionalProperty ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes the lexical entry represented by the component"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Component ;
+	rdfs:label "Element"@de ,
+		   "Element"@en ,
+		   "Elemento"@es ,
+		   "Elément"@fr ,
+		   "Element"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalEntry .
+
+lemon:entry
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates an entry in a lexicon"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Lexicon ;
+	rdfs:label "Eintrag"@de ,
+		   "Entry"@en ,
+		   "Entrada"@es ,
+		   "Entrée"@fr ,
+		   "Item"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalEntry .
+
+lemon:equivalent
+	a rdf:Property ,
+	  owl:ObjectProperty ,
+	  owl:SymmetricProperty ,
+	  owl:TransitiveProperty ;
+	rdfs:comment "Indicates that two senses are equivalent. From a lexical point of view , this indicates that the lexical entries can be substituted for each other with no change in meaning. From an ontological point of view it means that the two references are not disjoint. From a mapping point of view it means if one mapping apply the other must necessarily apply"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Äquivalent"@de ,
+		   "Equivalent"@en ,
+		   "Equivalente"@es ,
+		   "Equivalent"@fr ,
+		   "Equivalent"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:subPropertyOf lemon:senseRelation .
+
+lemon:example
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Beispiel"@de ,
+		   "Example"@en ,
+		   "Ejemplo"@es ,
+		   "Exemple"@fr ,
+		   "Voorbeeld"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:UsageExample .
+
+lemon:extrinsicArg
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "A raisable semantic argument is not in fact the semantic argument of the current frame-sense but instead is \"raised\" into a frame-sense used for an argument. For example the phrase \"John seemed to be happy\", is interpreted as \"it seemed that X\" where X is \"John is happy\", hence the subject of \"seem\" is a raisable argument."@en ,
+		     ""@ru ;
+	rdfs:label "Äußerliche Argument"@de ,
+		   "Extrinsic argument"@en ,
+		   "Argumento extrínseco"@es ,
+		   "Actant extrinsèque"@fr ,
+		   "Extrinsiek argument"@nl ,
+		   ""@ru ;
+	rdfs:subPropertyOf lemon:semArg .
+
+lemon:formVariant
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:domain lemon:Form ;
+	rdfs:label "Form-Variante"@de ,
+		   "Form variant"@en ,
+		   "Variante de la forma"@es ,
+		   "Variante de la forme"@fr ,
+		   "Vorm variant"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Form .
+
+lemon:generates
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:domain lemon:MorphTransform ;
+	rdfs:label "Erzeugt"@de ,
+		   "Generates"@en ,
+		   "Genera"@es ,
+		   "Génère"@fr ,
+		   "Genereert"@nl ,
+		   "Порождает"@ru ;
+	rdfs:range lemon:Prototype ;
+	rdfs:subClassOf [ a owl:Restriction ;
+			  owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+			  owl:onProperty lemon:rule
+			] .
+
+lemon:hiddenRef
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "The sense of a non-admissible lexicalization for a ontology entity. This is used to denote incorrect or deprecated language that may be useful for information extraction but not generation"@en ,
+		     ""@ru ;
+	rdfs:label "Verborgene Referenz von"@de ,
+		   "Hidden reference of"@en ,
+		   "Referencia oculta de"@es ,
+		   "Référence cachée de"@fr ,
+		   "Verborgen referentie van"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:subPropertyOf lemon:isReferenceOf .
+
+lemon:incompatible
+	a rdf:Property ,
+	  owl:ObjectProperty ,
+	  owl:SymmetricProperty ;
+	rdfs:comment "Says that the two senses are disjoint. From a lexical point of view, this means substituting the lexical entries must change the meaning of the phrase. From an ontological point of view, this property is implied if both references are also disjoint, but does not imply disjointness, but non-equivalence of the references. For the mapping point of view  there is not instance when both mappings are valid."@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Inkompatibel"@de ,
+		   "Incompatible"@en ,
+		   "Incompatible"@es ,
+		   "Incompatible"@fr ,
+		   "Onverenigbaar"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:subPropertyOf lemon:senseRelation .
+
+lemon:isA
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes that the single argument of a class predicate is represented in the lexicon by the given semantic argument. That is Class(?x) or ?x rdf:type Class"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Instanz von"@de ,
+		   "Instance of"@en ,
+		   "Instancia de"@es ,
+		   "Instance de"@fr ,
+		   "Instantie van"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Argument ;
+	rdfs:subPropertyOf lemon:semArg .
+
+lemon:isReferenceOf
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicate that a reference has a given sense"@en ,
+		     ""@ru ;
+	rdfs:label "Referenz von"@de ,
+		   "Reference of"@en ,
+		   "Referencia de"@es ,
+		   "Référence de"@fr ,
+		   "Referentie van"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	owl:inverseOf lemon:reference .
+
+lemon:isSenseOf
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicate that a sense is realised by the given lexical entry"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Sinn von"@de ,
+		   "Sense of"@en ,
+		   "Acepción de"@es ,
+		   "Signfication de"@fr ,
+		   "Zin van"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalEntry ;
+	owl:inverseOf lemon:sense .
+
+lemon:language
+	a rdf:Property ,
+	  owl:DatatypeProperty ;
+	rdfs:comment "The language of a given lexicon. This should be some ISO-639 string"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:HasLanguage ;
+	rdfs:label "Sprache"@de ,
+		   "Language"@en ,
+		   "Lengua"@es ,
+		   "Langue"@fr ,
+		   "Taal"@nl ,
+		   ""@ru ;
+	rdfs:range xsd:string .
+
+lemon:leaf
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes the component referred to by the lex (pre-terminal) of the phrase structure"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Node ;
+	rdfs:label "Blatt"@de ,
+		   "Leaf"@en ,
+		   "Hoja"@es ,
+		   "Feuille"@fr ,
+		   "Blad"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:PhraseElement .
+
+lemon:lexicalForm
+	a rdf:Property ,
+	  owl:InverseFunctionalProperty ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes a written representation of a lexical entry"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Lexikalische Form"@de ,
+		   "Lexical form"@en ,
+		   "Forma léxica"@es ,
+		   "Forme lexicale"@fr ,
+		   "Lexikaal vorm"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Form .
+
+lemon:lexicalVariant
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates a non-semantic relationship between two lexical entries. E.g., a term is derived from another term, such as \"lexical\" and \"lexicalize\""@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Lexikalische Variante"@de ,
+		   "Lexical variant"@en ,
+		   "Variante léxica"@es ,
+		   "Variante lexicale"@fr ,
+		   "Lexikaal variant"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalEntry .
+
+lemon:marker
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes the marker of a semantic argument. This should generally either be a semantic property i.e., case or another lexical entry e.g., a preposition or particle"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Argument ;
+	rdfs:label "Marker"@de ,
+		   "Marker"@en ,
+		   "Marcador"@es ,
+		   "Marqueur"@fr ,
+		   "Merker"@nl ,
+		   "маркер"@ru ;
+	rdfs:range lemon:SynRoleMarker .
+
+lemon:narrower
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes that one sense is narrower than another. From a lexical point of view  this means replacing one lexical entry with another specializes the meaning of the phrase. From an ontological point of view this property makes not strong assertions. From a mapping point of view if the broader sense applies the narrower sense must also"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Enger"@de ,
+		   "Narrower"@en ,
+		   "Más estrecho"@es ,
+		   "Plus restreint"@fr ,
+		   "Enger"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:subPropertyOf lemon:senseRelation .
+
+lemon:nextTransform
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:domain lemon:MorphTransform ;
+	rdfs:label "Folgende Transformation"@de ,
+		   "Next transform"@en ,
+		   "Transformación siguiente"@es ,
+		   "Transformation suivante"@fr ,
+		   "Volgende transformatie"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:MorphTransform .
+
+lemon:objOfProp
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates the semantic argument which represents the objects (ranges) of the property referred to by this sense"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Objekt von Prädikat"@de ,
+		   "Object of property"@en ,
+		   "Complemento de la propiedad"@es ,
+		   "Complément de la propiété"@fr ,
+		   "Object van predikaat"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Argument ;
+	rdfs:subPropertyOf lemon:semArg .
+
+lemon:optional
+	a rdf:Property ,
+	  owl:DatatypeProperty ;
+	rdfs:comment "Denotes that the syntactic argument is optional (may be omitted)"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Argument ;
+	rdfs:label "Optional"@de ,
+		   "Optional"@en ,
+		   "Opcional"@es ,
+		   "Optionnel"@fr ,
+		   "Optionele"@nl ,
+		   ""@ru ;
+	rdfs:range xsd:boolean .
+
+lemon:otherForm
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "A non-preferred (\"non-dictionary\") representation of a lexical entry. This should be variant that is either a morphological variant, an abbreviation, short form or acronym"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Andere Form"@de ,
+		   "Other form"@en ,
+		   "Otra forma"@es ,
+		   "Autre forme"@fr ,
+		   "Andere vorm"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Form ;
+	rdfs:subPropertyOf lemon:lexicalForm .
+
+lemon:pattern
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:domain lemon:HasPattern ;
+	rdfs:label "Muster"@de ,
+		   "Pattern"@en ,
+		   "Patrón"@es ,
+		   "Patron"@fr ,
+		   "Patroon"@nl ,
+		   "Шаблон"@ru ;
+	rdfs:range lemon:MorphPattern .
+
+lemon:phraseRoot
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates the head node of a phrase structure or dependency parse graph"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Phrasewurzel"@de ,
+		   "Phrase root"@en ,
+		   "Raíz del sintagma"@es ,
+		   "Base de la syntagme"@fr ,
+		   "Zinsdeel wortel"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Node .
+
+lemon:prefRef
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "The sense of the preferred lexicalization of a given ontology entity"@en ,
+		     ""@ru ;
+	rdfs:label "Bevorzugte Referenz von"@de ,
+		   "Preferred reference of"@en ,
+		   "Referencia preferida de"@es ,
+		   "Référence préféré de"@fr ,
+		   "Voorkeursreferentie van"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense ;
+	rdfs:subPropertyOf lemon:isReferenceOf .
+
+lemon:property
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes a lexical property of a lexical entry, form, component or MWE node. For the lexical entry this is assumed to be static properties e.g., part of speech and gender and for the others this is assumed to be specific properties e.g., case, number"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LemonElement ;
+	rdfs:label "Lexikalische Prädikat"@de ,
+		   "Lexical property"@en ,
+		   "Propiedad léxica"@es ,
+		   "Propiété lexicale"@fr ,
+		   "Lexikaal predikaat"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:PropertyValue .
+
+lemon:propertyDomain
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates a restrictions on the domain of the property. That is, this sense only applies if the property the sense refers to has a subject in the class referred to by this property"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Prädikatsbereich"@de ,
+		   "Property domain"@en ,
+		   "Dominio de la propiedad"@es ,
+		   "Ensemble de la propiété"@fr ,
+		   "Domein van het predikaat"@nl ,
+		   ""@ru ;
+	rdfs:subPropertyOf lemon:condition .
+
+lemon:propertyRange
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates a restrictions on the range of the property. That is, this sense only applies if the property the sense refers to has a object in the class referred to by this property"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Prädikatszielmenge"@de ,
+		   "Property range"@en ,
+		   "Rango de la propiedad"@es ,
+		   "Image de la propiété"@fr ,
+		   "Bereik van het predikaat"@nl ,
+		   ""@ru ;
+	rdfs:subPropertyOf lemon:condition .
+
+lemon:reference
+	a rdf:Property ,
+	  owl:FunctionalProperty ,
+	  owl:ObjectProperty ;
+	rdfs:comment "A reference to an external resource"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Referenz"@de ,
+		   "Reference"@en ,
+		   "Referencia"@es ,
+		   "Référence"@fr ,
+		   "Referentie"@nl ,
+		   ""@ru .
+
+lemon:representation
+	a rdf:Property ,
+	  owl:DatatypeProperty ;
+	rdfs:comment "A realisation of a given form"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Form ;
+	rdfs:label "Darstellung"@de ,
+		   "Representation"@en ,
+		   "Representación"@es ,
+		   "Représentation"@fr ,
+		   "Voorstelling"@nl ,
+		   ""@ru ;
+	rdfs:range xsd:string .
+
+lemon:rule
+	a rdf:Property ,
+	  owl:DatatypeProperty ;
+	rdfs:domain lemon:MorphTransform ;
+	rdfs:label "Regel"@de ,
+		   "Rule"@en ,
+		   "Regla"@es ,
+		   "Règle"@fr ,
+		   "Regel"@nl ,
+		   ""@ru ;
+	rdfs:range xsd:string .
+
+lemon:semArg
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes a semantic argument slot of a semantic unit"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Semantische Argument"@de ,
+		   "Semantic argument"@en ,
+		   "Argumento semántico"@es ,
+		   "Actant sémantique"@fr ,
+		   "Semantisch argument"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Argument .
+
+lemon:sense
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates the sense of a lexical entry"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Sinn"@de ,
+		   "Sense"@en ,
+		   "Acepción"@es ,
+		   "Signification"@fr ,
+		   "Zin"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense .
+
+lemon:senseRelation
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Denotes a relationship between senses"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Sinn-Relation"@de ,
+		   "Sense relation"@en ,
+		   "Relación de Acepción"@es ,
+		   "Relation de Signification"@fr ,
+		   "Zin relatie"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense .
+
+lemon:separator
+	a rdf:Property ,
+	  owl:DatatypeProperty ;
+	rdfs:comment "Indicates the graphical element used to seperate the subnodes of this phrase structure. It is generally recommended that you use a string value with the language tag used to indicate script, (i.e., using ISO-15924 codes, such as \"Latn\"), as orthographic features may change with script."@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Node ;
+	rdfs:label "Separator"@de ,
+		   "Separator"@en ,
+		   "Separador"@es ,
+		   "Séparateur"@fr ,
+		   "Afscheider"@nl ,
+		   ""@ru ;
+	rdfs:range xsd:string .
+
+lemon:subjOfProp
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates the semantic argument which represents the subjects (domain) of the property referred to by this sense"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Subjekt von Prädikat"@de ,
+		   "Subject of property"@en ,
+		   "Sujeto de la propiedad"@es ,
+		   "Sujet de la propiété"@fr ,
+		   "Onderwerp van predikaat"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Argument ;
+	rdfs:subPropertyOf lemon:semArg .
+
+lemon:subsense
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates that the relation between a compound sense and its atomic subsenses"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalSense ;
+	rdfs:label "Teil des Sinnes"@de ,
+		   "Subsense"@en ,
+		   "Parte del acepción"@es ,
+		   "Signification composante"@fr ,
+		   "Deel van de zin"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalSense .
+
+lemon:synArg
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates a slot in a syntactic frame"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Frame ;
+	rdfs:label "Syntactische Argument"@de ,
+		   "Syntactic argument"@en ,
+		   "Argumento sintáctico"@es ,
+		   "Actant syntaxique"@fr ,
+		   "Syntactisch argument"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Argument .
+
+lemon:synBehavior
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates a syntactic behavior of a lexical entry"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:LexicalEntry ;
+	rdfs:label "Syntactische Verhalten"@de ,
+		   "Syntactic behavior"@en ,
+		   "Funcionamiento sintáctico"@es ,
+		   "Conduite syntaxique"@fr ,
+		   "Syntactisch optreden"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:Frame .
+
+lemon:topic
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:comment "Indicates the topic of the overrall lexicon, this is property is sometimes called \"subject field\". Note that in addition to the topic of a lexicon each lexical entry may belong to a given domain, this can be modelled as equal or not equal to the topic of the associated lexicon"@en ,
+		     ""@ru ;
+	rdfs:domain [ a rdfs:Class ;
+		      owl:unionOf ( lemon:LexicalEntry
+				    lemon:Lexicon
+				  )
+		    ] ;
+	rdfs:label "Thema"@de ,
+		   "Topic"@en ,
+		   "Tema"@es ,
+		   "Thème"@fr ,
+		   "Thema"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:LexicalTopic .
+
+lemon:transform
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:domain lemon:MorphPattern ;
+	rdfs:label "Transformation"@de ,
+		   "Transform"@en ,
+		   "Transformación"@es ,
+		   "Transformation"@fr ,
+		   "Transformatie"@nl ,
+		   ""@ru ;
+	rdfs:range lemon:MorphTransform .
+
+lemon:tree
+	a rdf:Property ,
+	  owl:ObjectProperty ;
+	rdfs:label "Baum"@de ,
+		   "Tree"@en ,
+		   "Árbol"@es ,
+		   "Arbre"@fr ,
+		   "Boom"@nl ,
+		   ""@ru .
+
+lemon:value
+	a rdf:Property ,
+	  owl:DatatypeProperty ;
+	rdfs:comment "This indicates the value of a pseudo-data node. An example of this is definition where the value would generally be a string but it would not be possible to add further annotations, such as source or creation date."@en ,
+		     ""@ru ;
+	rdfs:label "Wert"@de ,
+		   "Value"@en ,
+		   "Valor"@es ,
+		   "Valeur"@fr ,
+		   "Waarde"@nl ,
+		   ""@ru .
+
+lemon:writtenRep
+	a rdf:Property ,
+	  owl:DatatypeProperty ;
+	rdfs:comment "Gives the written representation of a given form"@en ,
+		     ""@ru ;
+	rdfs:domain lemon:Form ;
+	rdfs:label "Schriftliche Darstellung"@de ,
+		   "Written representation"@en ,
+		   "Representación escrita"@es ,
+		   "Représentation écrite"@fr ,
+		   "Schriftelijke voorstelling"@nl ,
+		   ""@ru ;
+	rdfs:range xsd:string ;
+	rdfs:subPropertyOf lemon:representation .
