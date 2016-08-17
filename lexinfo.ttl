@@ -409,7 +409,7 @@ lexinfo:AdjectivePostPositiveFrame
 lexinfo:AdjectivePredicateFrame
 	a owl:Class ;
 	rdfs:comment "Note this frame should be used when both attributive and predicative use of the adjective is allowed"@en ,
-		     ""@ru ;
+		     "Эта рамка [рамочная структура] должна использоваться, когда прилагательное может использоваться как атрибутивным или предикативным"@ru ;
 	rdfs:isDefinedBy ontology:lexinfo ;
 	rdfs:subClassOf lexinfo:AdjectiveFrame ;
 	owl:equivalentClass [ a owl:Class ;
