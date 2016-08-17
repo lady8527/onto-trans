@@ -421,6 +421,7 @@ lexinfo:AdjectivePredicateFrame
 lexinfo:AdjectivePredicativeFrame
 	a owl:Class ;
 	lexinfo:example "he is HAPPY"@en ;
+	lexinfo:example "он СЧАСТЛИВ"@ru ;
 	rdfs:isDefinedBy ontology:lexinfo ;
 	rdfs:subClassOf lexinfo:AdjectiveFrame ;
 	owl:equivalentClass [ a owl:Class ;
